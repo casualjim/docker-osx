@@ -162,6 +162,7 @@ config.vm.box = "casualjim/trusty-vagrant"
 
   config.vm.provision "shell", inline: "$INSTALL_DOCKER_REPO"
   config.vm.provision "shell", inline: "$INSTALL_UPDATE_DOCKER"
+  config.vm.provision "shell", inline: "$COMMON_TOOLS"
   config.vm.provision "shell", inline: "echo 'export DOCKER_OPTS=\"-H unix:///var/run/docker.sock -H tcp://0.0.0.0:$DOCKER_PORT\"' >> /etc/default/docker"
 
   vagrantfile_extra = "#{ENV['VAGRANT_CWD']}/Vagrantfile_extra.rb"
