@@ -26,7 +26,7 @@ DOCKER_IP="172.16.42.43"
 DOCKER_DOMAIN="localdocker"
 DOCKER_PORT="4243"
 
-DOCKER_VERSION="1.2.0"
+DOCKER_VERSION="1.3.0"
 
 DOCKER_BIN="/usr/local/bin/docker"
 
@@ -153,11 +153,17 @@ config.vm.box = "casualjim/trusty-vagrant"
 
     v.customize ["modifyvm", :id, "--usb", "off"]
     v.customize ["modifyvm", :id, "--usbehci", "off"]
-    v.customize ["modifyvm", :id, "--usbcardreader", "off"] 
+    v.customize ["modifyvm", :id, "--usbcardreader", "off"]
 
     v.customize ["modifyvm", :id, "--chipset", "ich9"]
     v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     v.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+  end
+
+  config.vm.provider "vmware_fusion" do |v|
+    v.name = "localdocker"
+    v.vmx["memsize"] = ENV['VM_MEMORY'] || "4096"
+    v.vmx["numvcpus"] = ENV['VM_CPUS'] || "4"
   end
 
   config.vm.provision "shell", inline: "$INSTALL_DOCKER_REPO"
@@ -263,4 +269,3 @@ case "$1" in
     exit 1
     ;;
 esac
-
